@@ -203,6 +203,32 @@ object CrashFrequencyDetector {
      */
     fun checkAtLaunch(app: Application) {
         try {
+            // On version update, clear stale crash files from the previous
+            // version to prevent the crash-burst detector from locking the
+            // user into safe-mode after an upgrade that fixes the crash.
+            // Without this, crash-*.log files from a broken old build
+            // persist across APK updates (same applicationId) and keep
+            // tripping the threshold on every launch.
+            val prefs = app.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+            val lastVersion = prefs.getInt("last_version_code", 0)
+            val currentVersion = try {
+                app.packageManager.getPackageInfo(app.packageName, 0)
+                    .let { if (android.os.Build.VERSION.SDK_INT >= 28) it.longVersionCode.toInt() else @Suppress("DEPRECATION") it.versionCode }
+            } catch (_: Exception) { 0 }
+            if (lastVersion != 0 && lastVersion != currentVersion) {
+                val logsDir = File(app.filesDir, "logs")
+                if (logsDir.isDirectory) {
+                    logsDir.listFiles { f ->
+                        val n = f.name
+                        (n.startsWith("crash-") || n.startsWith("native-crash-")) && n.endsWith(".log")
+                    }?.forEach { it.delete() }
+                    android.util.Log.i(TAG, "checkAtLaunch: version changed ($lastVersion → $currentVersion), cleared old crash files")
+                }
+            }
+            if (currentVersion != 0) {
+                prefs.edit().putInt("last_version_code", currentVersion).apply()
+            }
+
             // "Not now" 24-hour hard suppress. Once the user explicitly
             // dismisses, skip the whole detection path on cold starts
             // until the suppress window expires. After expiry we
