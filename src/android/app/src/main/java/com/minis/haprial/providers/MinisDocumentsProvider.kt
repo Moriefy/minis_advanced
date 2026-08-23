@@ -42,7 +42,7 @@ import java.io.FileNotFoundException
 class MinisDocumentsProvider : DocumentsProvider() {
 
     companion object {
-        const val AUTHORITY = "com.openminis.minis.documents"
+        const val AUTHORITY = "com.minis.haprial.documents"
         private const val ROOT_ID = "minis-root"
         private const val ROOT_DOC_ID = ""        // empty = providerRoot
         private val TOP_LEVEL = listOf("memory", "skills", "shared")

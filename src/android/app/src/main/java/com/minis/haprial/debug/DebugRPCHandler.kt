@@ -503,7 +503,7 @@ class DebugRPCHandler(private val context: Context) {
         val i = lines.indexOfFirst { it.startsWith("--- Stack Trace ---") }
         val body = if (i >= 0) lines.drop(i + 1) else lines
         val head = body.firstOrNull { it.isNotBlank() }?.trim().orEmpty()
-        val frame = body.firstOrNull { it.trimStart().startsWith("at com.openminis") }
+        val frame = body.firstOrNull { it.trimStart().startsWith("at com.minis.haprial") }
             ?.trim()?.removePrefix("at ").orEmpty()
         listOf(head, frame).filter { it.isNotEmpty() }.joinToString("  |  ")
     } catch (e: Exception) {
