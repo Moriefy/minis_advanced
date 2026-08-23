@@ -372,12 +372,14 @@ internal fun AttachmentChip(
 @Composable
 internal fun InputCircleButton(
     onClick: () -> Unit,
+    modifier: Modifier = Modifier,
+    backgroundColor: Color = ChatColors.inputIconBg,
     content: @Composable () -> Unit,
 ) {
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(38.dp)
-            .background(ChatColors.inputIconBg, CircleShape)
+            .background(backgroundColor, CircleShape)
             .border(0.5.dp, ChatColors.inputIconBorder, CircleShape)
             .clip(CircleShape)
             .clickable(onClick = onClick),
