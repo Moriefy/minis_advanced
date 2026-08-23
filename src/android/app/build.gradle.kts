@@ -33,7 +33,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.minis.haprial"
+        applicationId = "com.openminis.app"
         minSdk = 26
         targetSdk = 35
         versionCode = 24

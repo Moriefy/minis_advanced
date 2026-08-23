@@ -53,7 +53,7 @@ class AgentForegroundService : Service() {
         // a public SDK constant; value verified by decompiling the on-device
         // framework.jar (const-string "android.requestPromotedOngoing").
         private const val EXTRA_REQUEST_PROMOTED_ONGOING = "android.requestPromotedOngoing"
-        private const val ACTION_STOP = "com.minis.haprial.STOP_AGENT_SERVICE"
+        private const val ACTION_STOP = "com.openminis.app.STOP_AGENT_SERVICE"
 
         /**
          * Starts or updates the foreground service with current status.

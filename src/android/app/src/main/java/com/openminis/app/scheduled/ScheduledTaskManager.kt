@@ -168,7 +168,7 @@ class ScheduledTaskManager(private val context: Context) {
 
     companion object {
         private const val TAG = "ScheduledTaskManager"
-        const val ACTION_FIRE = "com.minis.haprial.scheduled.FIRE"
+        const val ACTION_FIRE = "com.openminis.app.scheduled.FIRE"
         const val EXTRA_TASK_ID = "task_id"
         const val CHANNEL_ID = "minis_scheduled_tasks"
         private const val CHANNEL_NAME = "Scheduled Tasks"
