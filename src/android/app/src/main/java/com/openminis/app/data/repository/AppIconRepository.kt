@@ -29,7 +29,10 @@ object AppIconRepository {
     private const val TAG = "AppIconRepository"
     private const val PREFS = "app_icon_prefs"
     private const val KEY_SELECTED_ID = "selected_icon_id"
-    private const val PACKAGE_NAME = "com.minis.haprial"
+    // Component names resolve against the namespace (source package), NOT the
+    // applicationId.  The activity-alias classes live under com.openminis.app.*,
+    // so aliasClass strings must use that prefix.
+    private const val PACKAGE_NAME = "com.openminis.app"
 
     enum class Variant(val id: String, val aliasClass: String) {
         Auto("auto", "$PACKAGE_NAME.MainActivityIconAuto"),
