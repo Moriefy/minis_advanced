@@ -3304,7 +3304,6 @@ class ChatViewModel(
         val session = chatRepository.createSession(
             modelId = modelId,
             memoryEnabled = _memoryEnabled.value,
-            context = context,
         )
         realSessionId = session.id
         // "New Chat in Group": file the just-promoted draft into its folder.
