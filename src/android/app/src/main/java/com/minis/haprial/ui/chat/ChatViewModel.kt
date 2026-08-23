@@ -57,6 +57,7 @@ import com.minis.haprial.tools.FileReadTool
 import com.minis.haprial.tools.FileWriteTool
 import com.minis.haprial.tools.MemoryTools
 import com.minis.haprial.tools.ReadImageTool
+import com.minis.haprial.tools.SearchWebTool
 import com.minis.haprial.tools.ToolExecutionResult
 import com.minis.haprial.offload.OffloadPermissionManager
 import com.minis.haprial.service.SessionActivityTracker
@@ -839,6 +840,7 @@ class ChatViewModel(
                 providerRepository, context,
             ),
             memoryEnabled = _memoryEnabled.value,
+            context = context,
         )
 
     /**
@@ -3302,6 +3304,7 @@ class ChatViewModel(
         val session = chatRepository.createSession(
             modelId = modelId,
             memoryEnabled = _memoryEnabled.value,
+            context = context,
         )
         realSessionId = session.id
         // "New Chat in Group": file the just-promoted draft into its folder.
@@ -8030,6 +8033,8 @@ class ChatViewModel(
             "browser_use" -> executeBrowserUseTool(argsJson)
             "memory_write" -> executeMemoryWriteTool(argsJson)
             "memory_get" -> executeMemoryGetTool(argsJson)
+            SearchWebTool.NAME_SEARCH -> SearchWebTool.executeSearch(argsJson, context)
+            SearchWebTool.NAME_SCRAPE -> SearchWebTool.executeScrape(argsJson, context)
             else -> ToolExecutionResult("Unknown tool: $name", false)
         }
     }

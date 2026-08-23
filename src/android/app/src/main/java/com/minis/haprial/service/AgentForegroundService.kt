@@ -939,6 +939,8 @@ class AgentForegroundService : Service() {
         "file_write" -> "Minis is using Editor"
         "file_edit" -> "Minis is editing File"
         "browser_use" -> "Minis is using Browser"
+        "search_web" -> "Minis is searching the web"
+        "scrape_web" -> "Minis is scraping a webpage"
         "read_image" -> "Minis is reading Image"
         "memory_write", "memory_get" -> "Minis is using Memory"
         "web_search" -> "Minis is using Search"
@@ -967,6 +969,7 @@ class AgentForegroundService : Service() {
         "file_read", "read_image" -> android.R.drawable.ic_menu_view
         "file_write", "file_edit" -> android.R.drawable.ic_menu_edit
         "browser_use" -> android.R.drawable.ic_menu_compass
+        "search_web", "scrape_web" -> android.R.drawable.ic_menu_search
         "memory_write", "memory_get" -> android.R.drawable.ic_menu_save
         "web_search" -> android.R.drawable.ic_menu_search
         else -> android.R.drawable.ic_menu_manage

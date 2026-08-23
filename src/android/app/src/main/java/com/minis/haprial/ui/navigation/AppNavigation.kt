@@ -32,6 +32,7 @@ import com.minis.haprial.data.repository.ProviderRepository
 import com.minis.haprial.ui.chat.ChatScreen
 import com.minis.haprial.ui.sessions.SessionListScreen
 import com.minis.haprial.ui.settings.AboutScreen
+import com.minis.haprial.ui.settings.SearchSettingsScreen
 import com.minis.haprial.ui.settings.AddAgentLoopGroupsScreen
 import com.minis.haprial.ui.settings.AddAgentLoopModelsScreen
 import com.minis.haprial.ui.settings.AddCustomModelScreen
@@ -162,6 +163,7 @@ object Routes {
     const val LOGS = "logs"
     const val LOG_DETAIL = "log_detail/{fileName}"
     const val APPEARANCE = "appearance"
+    const val WEB_SEARCH = "web_search"
     const val BACKGROUND = "background"
     const val ABOUT = "about"
     const val ONBOARDING_MODELS = "onboarding_models"
@@ -589,6 +591,7 @@ fun AppNavigation(
                 onAboutClick = { navController.safeNavigate(Routes.ABOUT) },
                 onMountedFoldersClick = { navController.safeNavigate(Routes.MOUNTED_FOLDERS) },
                 onSharedFoldersClick = { navController.safeNavigate(Routes.SHARED_FOLDERS) },
+                onWebSearchClick = { navController.safeNavigate(Routes.WEB_SEARCH) },
             )
         }
 
@@ -1181,6 +1184,12 @@ fun AppNavigation(
 
         composable(Routes.APPEARANCE) {
             AppearanceScreen(
+                onBack = { navController.safePopBackStack() },
+            )
+        }
+
+        composable(Routes.WEB_SEARCH) {
+            SearchSettingsScreen(
                 onBack = { navController.safePopBackStack() },
             )
         }

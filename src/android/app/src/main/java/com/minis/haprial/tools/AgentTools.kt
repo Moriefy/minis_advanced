@@ -1,8 +1,11 @@
 package com.minis.haprial.tools
 
+import android.content.Context
 import com.minis.haprial.browser.BrowserAction
 import com.minis.haprial.data.model.AgentToolDefinition
 import com.minis.haprial.data.model.AgentToolParam
+import com.minis.haprial.search.SearchProviderType
+import com.minis.haprial.search.SearchSettingsStore
 
 /**
  * Central registry of all agent tool definitions.
@@ -15,7 +18,7 @@ object AgentTools {
         supportsImageInput: Boolean = true,
         visionGroupConfigured: Boolean = false,
         memoryEnabled: Boolean = true,
-        searchEnabled: Boolean = false,
+        context: Context? = null,
     ): List<AgentToolDefinition> = buildList {
         add(shellExecuteDefinition())
         add(FileReadTool.definition())
@@ -29,10 +32,22 @@ object AgentTools {
             add(memoryWriteDefinition())
             add(memoryGetDefinition())
         }
-        if (searchEnabled) {
-            add(SearchTool.searchWebDefinition())
-            add(SearchTool.scrapeWebDefinition())
+        // Web search tools (ported from RikkaHub)
+        if (context != null) {
+            addSearchTools(context)
         }
+    }
+
+    /**
+     * Add web search tools based on the user's configured search provider.
+     * Requires at least one search provider with a valid API key (or SearXNG).
+     */
+    private fun MutableList<AgentToolDefinition>.addSearchTools(context: Context) {
+        val store = SearchSettingsStore.getInstance(context)
+        val config = store.getActiveProvider()
+        if (config.apiKey.isEmpty() && config.type != SearchProviderType.SEARXNG) return
+        add(SearchWebTool.searchDefinition(context))
+        SearchWebTool.scrapeDefinition(context)?.let { add(it) }
     }
 
     // Aligned with iOS AIChatViewModel.swift:4982-4993
